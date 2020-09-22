@@ -1,6 +1,9 @@
 package jm.task.core.jdbc;
 
-import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
+import jm.task.core.jdbc.dao.UserDao;
+import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
+import jm.task.core.jdbc.util.Util;
+import org.hibernate.Session;
 //import jm.task.core.jdbc.util.Util;
 
 //import java.sql.SQLException;
@@ -9,13 +12,15 @@ import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 
 public class Main {
     public static void main(String[] args) {
-        UserDaoJDBCImpl daoJDBC = new UserDaoJDBCImpl();
-        daoJDBC.createUsersTable();
-        daoJDBC.saveUser("fgg1", "kgdkvdd", (byte) 56);
-        //daoJDBC.removeUserById(10);
+        UserDao daoJDBC = new UserDaoHibernateImpl();
+        //UserDaoJDBCImpl daoJDBC = new UserDaoJDBCImpl();
+        //daoJDBC.createUsersTable();
+        daoJDBC.saveUser("David", "Bengur", (byte) 33);
+       // daoJDBC.removeUserById(1);
         //daoJDBC.cleanUsersTable();
         //daoJDBC.dropUsersTable();
-        daoJDBC.getAllUsers();
+        //System.out.println(daoJDBC.getAllUsers());
 
     }
 }
+

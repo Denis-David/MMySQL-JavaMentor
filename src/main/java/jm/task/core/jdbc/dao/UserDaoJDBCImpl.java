@@ -17,6 +17,7 @@ public class UserDaoJDBCImpl implements UserDao {
     private static final String ADD = "INSERT INTO users (name, lastName, age) VALUES (?,?,?)";
     private static final String SQL2 = "DROP TABLE IF EXISTS users";
     private static final String SQL3 = "DELETE FROM users WHERE id = ?";
+
     public UserDaoJDBCImpl() {
 
     }
