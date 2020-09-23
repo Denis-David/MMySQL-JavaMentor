@@ -14,9 +14,6 @@ public class UserDaoJDBCImpl implements UserDao {
     private PreparedStatement preparedStatement = null;
     private Statement statement = null;
     private final Util connect = new Util();
-    private static final String ADD = "INSERT INTO users (name, lastName, age) VALUES (?,?,?)";
-    private static final String SQL2 = "DROP TABLE IF EXISTS users";
-    private static final String SQL3 = "DELETE FROM users WHERE id = ?";
     public UserDaoJDBCImpl() {
 
     }
@@ -40,6 +37,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void dropUsersTable() {
+        String SQL2 = "DROP TABLE IF EXISTS users";
         try {
             statement = connect.getConnection().createStatement();
             System.out.println("Removing table in selected database...");
@@ -59,12 +57,16 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void saveUser(String name, String lastName, byte age) {
+        User user = new User(name, lastName, age);
+        user.setName(name);
+        String ADD = "INSERT INTO users (name, lastName, age) VALUES (?,?,?)";
         try (Statement statement = connect.getConnection().createStatement()) {
             preparedStatement = connect.getConnection().prepareStatement(ADD);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
             preparedStatement.executeUpdate();
+            System.out.println("User с именем –" + user.getName() + "добавлен в базу данных");
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NullPointerException s) {
@@ -76,6 +78,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void removeUserById(long id) {
+        String SQL3 = "DELETE FROM users WHERE id = ?";
         System.out.println("Removing record with id ");
         try (Statement statement = connect.getConnection().createStatement()) {
             preparedStatement = connect.getConnection().prepareStatement(SQL3);
